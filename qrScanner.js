@@ -1,18 +1,13 @@
-// import { Html5QrcodeScanner } from "html5-qrcode";
-
-const scanner = new Html5QrcodeScanner('reader', {
-    qrbox: {
-      width: 300,
-      height: 300
-    },
-    fps: 20,
-})
-scanner.render(success, error)
-function success(result){
-    console.log(result)
-    document.querySelector('.reader-data').textContent = result
-}
-function error(err){
-    // console.error(err)
-    document.querySelector('.reader-data').textContent = err
-}
+function onScanSuccess(decodedText, decodedResult) {
+    console.log(`Code matched = ${decodedText}`, decodedResult);
+  }
+  
+  function onScanFailure(error) {
+    console.warn(`Code scan error = ${error}`);
+  }
+  
+  let html5QrcodeScanner = new Html5QrcodeScanner(
+    "reader",
+    { fps: 10, qrbox: {width: 250, height: 250} },
+    /* verbose= */ false);
+  html5QrcodeScanner.render(onScanSuccess, onScanFailure);
