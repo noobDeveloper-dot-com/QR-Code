@@ -10,7 +10,9 @@ const scanner = new Html5QrcodeScanner('reader', {
 scanner.render(success, error)
 function success(result){
     console.log(result)
+    document.querySelector('.reader-data').textContent = result
 }
 function error(err){
     // console.error(err)
+    document.querySelector('.reader-data').textContent = err
 }
