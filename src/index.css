@@ -1,0 +1,26 @@
+*,*::before,*::after{
+  box-sizing: border-box;
+  margin: 0;
+  padding:0;
+}
+body{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+.flexB{
+  display: flex;
+}
+.ref-wrapper{
+  justify-content: space-between;
+  & button{
+    padding: .5rem;
+  }
+}
+.displayData{
+  border: 1px solid;
+  width: 250px;
+  min-height: 150px;
+  padding: .5em;
+}
