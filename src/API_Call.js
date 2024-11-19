@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react"
+import { QrReader } from "react-qr-reader"
+
 
 
 function Api_Call(){
     const[referenceNum, setReferenceNum] = useState("")
     const[selectedData, setSelectedData] = useState()
+    const[data,setData] = useState('No Result') 
 
     useEffect(()=>{
      console.log(selectedData)
@@ -49,6 +52,19 @@ function Api_Call(){
                 <p>Product info: {selectedData.description}</p>
             </div>: <p>Data Not Found</p>}
          </div>
+         <QrReader
+           onResult={(result, error) =>{
+            if(!!result){
+                setData(result?.text)
+            }
+
+            if(!!error){
+                console.info(error)
+            }
+           }}
+           style={{width: '100%'}}
+         />
+         <p>{data}</p>
         </>
         
     )
