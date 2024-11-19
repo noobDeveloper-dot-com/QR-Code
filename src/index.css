@@ -24,3 +24,8 @@ body{
   min-height: 150px;
   padding: .5em;
 }
+#reader{
+  width: 250px;
+  height: 250px;
+  border: 1px solid red;
+}

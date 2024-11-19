@@ -1,13 +1,36 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
+import { Html5QrcodeScanner } from "html5-qrcode"
 
 
 function Api_Call(){
     const[referenceNum, setReferenceNum] = useState("")
     const[selectedData, setSelectedData] = useState()
+    const[scanResult, setScanResult] = useState()
+    const apiCallBtnRef = useRef()
 
     useEffect(()=>{
-     console.log(selectedData)
-    },[selectedData])
+        const scanner = new Html5QrcodeScanner('reader', {
+            qrbox: {
+                width: 250,
+                height:250
+            },
+            fps:5,
+          })
+        
+          scanner.render(success, error)
+        
+          function success(result){
+            scanner.clear()
+            setScanResult(result)
+            setReferenceNum(result)
+            setTimeout(()=>{
+                apiCallBtnRef.current.click()
+            }, 200)
+          }
+          function error(err){
+            console.log(err)
+          }
+    },[])
 
     function fetchData(){
         console.log(referenceNum)
@@ -35,12 +58,13 @@ function Api_Call(){
        setSelectedData(selectedDataObj)
 })}
 
+  
 
     return (
         <>
          <div className="ref-wrapper flexB">
           <input className="referenceNo" value={referenceNum} type="text" onChange={(e)=>{setReferenceNum(e.target.value)}}/>
-          <button className="api_call_btn" onClick={fetchData}>Submit</button>
+          <button className="api_call_btn" ref={apiCallBtnRef} onClick={fetchData}>Submit</button>
          </div>
          <div className="displayData">
             {selectedData? <div>
@@ -49,7 +73,8 @@ function Api_Call(){
                 <p>Product info: {selectedData.description}</p>
             </div>: <p>Data Not Found</p>}
          </div>
-        </>
+         <div id="reader"></div>
+</>
         
     )
 }
